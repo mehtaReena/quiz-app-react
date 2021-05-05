@@ -95,7 +95,7 @@ export default function Quiz(props) {
 		const nextQuestion = currentQuestion + 1;
 	 
 
-		if (nextQuestion < questions.length) {
+		if (nextQuestion <= questions.length) {
 
 			setTimeout(() => {
 				//console.log("   playerChoice    : " + JSON.stringify(choice));
