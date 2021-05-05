@@ -1,9 +1,9 @@
 import Question from './Question';
 import './styles.css';
 import Option from './Option';
-import { useState } from 'react';
+import { useState , useEffect} from 'react';
 import { useHistory } from "react-router-dom";
-/*  import ProgressBar from './ProgressBar'; */
+ import ProgressBar from './ProgressBar';
 
 
 export default function Quiz(props) {
@@ -56,13 +56,15 @@ export default function Quiz(props) {
 	//const [scores, setScore] = useState(0);
 	const [selectOption, setSelcted] = useState(null);
 	const [playerChoices, setplayerChoices] = useState([]);
-	//const [completed, setCompleted] = useState(0);
+	const [completed, setCompleted] = useState(0);
 
 	const [showScore, setShowScore] = useState(false);
 	const [score, setScore] = useState(0);
 
 
 	var choice = [];
+	let timer =100;
+	
 	
 	
 
@@ -98,8 +100,11 @@ export default function Quiz(props) {
 			setTimeout(() => {
 				//console.log("   playerChoice    : " + JSON.stringify(choice));
 				setplayerChoices(choice);
-				setCurrentQuestion(nextQuestion);
+				
 				setSelcted(null);
+				setCurrentQuestion(nextQuestion);
+				setCompleted(0);
+				 timer =100;
 				
 			}, 1000) 
 	
@@ -124,21 +129,27 @@ export default function Quiz(props) {
 
 	};
 
-	/* useEffect(() => {
-		let count =100
-		setInterval(() => {
-			setCompleted((count * 100)/100 ) 
-			count= count-10
+	useEffect(() => {
+	
+		 let timeInt =setInterval(() => {
+			setCompleted((timer * 100)/100 ) 
+			if(timer>0){
+				timer= timer-10
+
+			}
+			
+			
 			
 		},1000);
-	  }, [playerChoices] );
+
+
+	   return () => {
+      clearInterval(timeInt);
+    };
+  }, []);
 	
-	  useEffect(()=>{
-		  return()=>{}
+	
 
-	  },)
-
- */
 
 	return (
 
@@ -154,10 +165,10 @@ export default function Quiz(props) {
          
 
 
-{/* 
+
 			<div className="App">
 				<ProgressBar bgcolor={"#6a1b9a"} completed={completed} />
-			</div> */}
+			</div>
 
 			<div className='question-section'>
 				<div className='question-count'>

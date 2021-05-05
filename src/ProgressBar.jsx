@@ -1,9 +1,9 @@
 export default function  ProgressBar  (props)  {  
 
 
-  const { completed } = props;
-  /* const { bgcolor, completed } = props;
-   */
+ 
+  const { bgcolor, completed } = props;
+  console.log(completed);
   
   
   
