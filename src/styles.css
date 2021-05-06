@@ -168,18 +168,18 @@ body{
 .containerStyles{
   height: 20px;
   width: 1200px;
-  background-color: "#e0e0de";
+  background-color: "green";
   border-Radius: 50;
   margin: 50;
 
 }
 .fillerStyles{
-  height: '100%';
-  /* width: `${completed}%`, */
-  background-color: yellow;
-  border-Radius: 'inherit';
-  text-Align: 'right';
-  transition: 'width 1s ease-in-out';
-  color:black;
+  height: '100%'; 
+  background-color: green;
+  
+  border-Radius: 5px;
+  
+  transition: width  ease-in;
+  
 
 }

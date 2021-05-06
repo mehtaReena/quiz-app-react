@@ -1,9 +1,9 @@
 import Question from './Question';
 import './styles.css';
 import Option from './Option';
-import { useState , useEffect} from 'react';
+import { useState, useEffect } from 'react';
 import { useHistory } from "react-router-dom";
- import ProgressBar from './ProgressBar';
+import ProgressBar from './ProgressBar';
 
 
 export default function Quiz(props) {
@@ -63,15 +63,8 @@ export default function Quiz(props) {
 
 
 	var choice = [];
-	let timer =100;
-	
-	
-	
-
-
 
 	const handleAnswerOptionClick = (isCorrect, index, val, question, correctAns) => {
-		
 
 		choice = [...playerChoices];
 		let obj = {
@@ -89,35 +82,34 @@ export default function Quiz(props) {
 		//alert(isCorrect)
 		if (isCorrect) {
 			setScore(score + 1);
-			
-			
+
+
 		}
 		const nextQuestion = currentQuestion + 1;
-	 
 
-		if (nextQuestion <= questions.length) {
+
+		if (nextQuestion < questions.length) {
 
 			setTimeout(() => {
 				//console.log("   playerChoice    : " + JSON.stringify(choice));
 				setplayerChoices(choice);
-				
 				setSelcted(null);
 				setCurrentQuestion(nextQuestion);
 				setCompleted(0);
-				 timer =100;
-				
-			}, 1000) 
-	
+
+
+			}, 1000)
+
 
 
 		}
-		else{
+		else {
 			setShowScore(true);
-		    setSelcted(null);
+			setSelcted(null);
 			setScore(score);
-			console.log("   playerChoice    : " + JSON.stringify(choice) + "total  " +  score );
-		
-			setplayerChoices(choice);	
+			console.log("   playerChoice    : " + JSON.stringify(choice) + "total  " + score);
+
+			setplayerChoices(choice);
 
 			history.push({
 				pathname: "/Result",
@@ -130,69 +122,66 @@ export default function Quiz(props) {
 	};
 
 	useEffect(() => {
-	
-		 let timeInt =setInterval(() => {
-			setCompleted((timer * 100)/100 ) 
-			if(timer>0){
-				timer= timer-10
 
-			}
-			
-			
-			
-		},1000);
+		const timeInterval = setInterval(() => {
+			setCompleted(oldValue => {
+				const newvalue = oldValue + 10;
+				if (newvalue === 100) {
+					clearInterval(timeInterval);
+					setCompleted(0);
+				}
+				return newvalue;
+			})
+
+		}, 1000);
+
+	}, [currentQuestion]);
 
 
-	   return () => {
-      clearInterval(timeInt);
-    };
-  }, []);
-	
-	
 
 
 	return (
 
-		
+
 		<div className='container'>
-            {showScore ? (
+			{showScore ? (
 				<div className='score-section'>
 					You scored {score} out of {questions.length}
 				</div>
 			) : (<>
-				
-				
-         
 
 
 
-			<div className="App">
-				<ProgressBar bgcolor={"#6a1b9a"} completed={completed} />
-			</div>
 
-			<div className='question-section'>
-				<div className='question-count'>
-					<span>Question {currentQuestion + 1}</span>/{questions.length}
+
+
+				<div className="App">
+					<ProgressBar completed={completed} />
 				</div>
-				<Question question={questions[currentQuestion].questionText}></Question>
-			</div>
-			<div >
-				<div className='answer-section'>
-					{questions[currentQuestion].answerOptions.map((answerOption, idx) => (
-						<Option value={answerOption.answerText}
-							isCorrect={answerOption.isCorrect}
-							selected={selectOption === idx}
-							clickHandler={handleAnswerOptionClick}
-							index={idx}
-							question={questions[currentQuestion].questionText}
-							correct={questions[currentQuestion].ans}
 
-
-
-						></Option>
-					))}
+				<div className='question-section'>
+					<div className='question-count'>
+						<span>Question {currentQuestion + 1}</span>/{questions.length}
+					</div>
+					<Question question={questions[currentQuestion].questionText}></Question>
 				</div>
-			</div>
+				<div >
+					<div className='answer-section'>
+						{questions[currentQuestion].answerOptions.map((answerOption, idx) => (
+							<Option value={answerOption.answerText}
+								isCorrect={answerOption.isCorrect}
+								selected={selectOption === idx}
+								clickHandler={handleAnswerOptionClick}
+								index={idx}
+								question={questions[currentQuestion].questionText}
+								correct={questions[currentQuestion].ans}
+
+
+
+							></Option>
+						))}
+					</div>
+				</div>
 
 			</>
 			)}
