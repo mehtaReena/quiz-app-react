@@ -50,6 +50,20 @@ export default function Quiz(props) {
 			],
 			ans: '4'
 		},
+
+		{
+			questionText: 'Golden Temple is situated in',
+			answerOptions: [
+				{ answerText: 'New Delhi', isCorrect: false },
+				{ answerText: 'Agra', isCorrect: false },
+				{ answerText: 'Amritsar', isCorrect: true },
+				{ answerText: 'Mumbai', isCorrect: false },
+			],
+			ans: 'Amritsar'
+		},
+
+
+
 	];
 
 	const [currentQuestion, setCurrentQuestion] = useState(0);
